@@ -1,0 +1,24 @@
+// ==UserScript==
+// @name        fitness
+// @namespace   fitness
+// @description Convert oz to g
+// @include     https://wiki.greasespot.net/Main_Page
+// @include     http://www.bodybuilding.com/*
+// @require http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+// @version     1
+// @grant       none
+// ==/UserScript==
+
+var elem = $('h1, h2, h3, h4, h5, h6, span, a, p');
+
+$.each(elem, function(i, v) {
+
+  var elemtext = $(v).text();
+  var re = /(\d+).oz/g;
+  var newstr = elemtext.replace(re, function(m, p1) {
+    var convval = (p1.replace(/\D/g, '') * 28.34);
+    var retstr = " " + p1 + "oz <strong>(" + convval + "g)</strong> ";
+    return retstr;
+  });
+  $(v).html(newstr);
+})
